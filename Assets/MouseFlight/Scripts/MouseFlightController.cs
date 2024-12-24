@@ -4,6 +4,7 @@
 //
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MFlight
 {
@@ -35,6 +36,9 @@ namespace MFlight
 
         [SerializeField] [Tooltip("How far the boresight and mouse flight are from the aircraft")]
         private float aimDistance = 500f;
+
+        [Header("Input")]
+        [SerializeField] private InputActionProperty mouseController;
 
         [Space]
         [SerializeField] [Tooltip("How far the boresight and mouse flight are from the aircraft")]
@@ -96,6 +100,12 @@ namespace MFlight
             transform.parent = null;
         }
 
+        private void Start()
+        {
+            if (mouseController != null)
+                mouseController.action.Enable();
+        }
+
         private void Update()
         {
             if (useFixed == false)
@@ -127,9 +137,13 @@ namespace MFlight
                 mouseAim.forward = frozenDirection;
             }
 
-            // Mouse input.
-            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
-            float mouseY = -Input.GetAxis("Mouse Y") * mouseSensitivity;
+            // Old Mouse input.
+            //float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+            //float mouseY = -Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+            // New InputSystem Controller
+            float mouseX = mouseController.action.ReadValue<Vector2>().x * mouseSensitivity;
+            float mouseY = -mouseController.action.ReadValue<Vector2>().y * mouseSensitivity;
 
             // Rotate the aim target that the plane is meant to fly towards.
             // Use the camera's axes in world space so that mouse motion is intuitive.

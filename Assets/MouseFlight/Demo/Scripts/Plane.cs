@@ -4,6 +4,7 @@
 //
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MFlight.Demo
 {
@@ -30,6 +31,7 @@ namespace MFlight.Demo
         [Tooltip("Angle at which airplane banks fully into target.")] public float aggressiveTurnAngle = 10f;
 
         [Header("Input")]
+        [SerializeField] private InputActionProperty mouseController;
         [SerializeField] [Range(-1f, 1f)] private float pitch = 0f;
         [SerializeField] [Range(-1f, 1f)] private float yaw = 0f;
         [SerializeField] [Range(-1f, 1f)] private float roll = 0f;
@@ -51,6 +53,13 @@ namespace MFlight.Demo
                 Debug.LogError(name + ": Plane - Missing reference to MouseFlightController!");
         }
 
+        private void Start()
+        {
+            if (mouseController != null)
+                mouseController.action.Enable();
+        
+        }
+
         private void Update()
         {
             // When the player commands their own stick input, it should override what the
@@ -58,13 +67,23 @@ namespace MFlight.Demo
             rollOverride = false;
             pitchOverride = false;
 
-            float keyboardRoll = Input.GetAxis("Horizontal");
+            // Old Input System
+            //float keyboardRoll = Input.GetAxis("Horizontal");
+
+            //New InputSystem Controller
+            float keyboardRoll = mouseController.action.ReadValue<Vector2>().x;
+
             if (Mathf.Abs(keyboardRoll) > .25f)
             {
                 rollOverride = true;
             }
 
-            float keyboardPitch = Input.GetAxis("Vertical");
+            // Old Input System
+            //float keyboardPitch = Input.GetAxis("Vertical");
+
+            //New InputSystem Controller
+            float keyboardPitch = mouseController.action.ReadValue<Vector2>().y;
+
             if (Mathf.Abs(keyboardPitch) > .25f)
             {
                 pitchOverride = true;

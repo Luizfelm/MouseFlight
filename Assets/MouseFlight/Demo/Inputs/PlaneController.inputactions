@@ -1,0 +1,34 @@
+{
+    "name": "PlaneController",
+    "maps": [
+        {
+            "name": "Movement",
+            "id": "5d28ceb1-290b-4574-8498-9eff527ba40c",
+            "actions": [
+                {
+                    "name": "MouseController",
+                    "type": "Value",
+                    "id": "ed759698-0be3-4c39-a2de-6c79cf939699",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3dfd9c88-e5ba-4ea6-a838-e9acfc47f159",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseController",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
